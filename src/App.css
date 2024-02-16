@@ -36,3 +36,13 @@ img {
     flex-direction: column;
     align-items: center;
 }
+
+.create-puppy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-puppy > :nth-child(n){
+    margin: 5px;
+}
