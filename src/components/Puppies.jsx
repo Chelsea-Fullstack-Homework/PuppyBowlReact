@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import Puppy from './Puppy'
 
 function Puppies({puppies, setPuppies, setSelectedPuppy}){
@@ -16,7 +16,7 @@ function Puppies({puppies, setPuppies, setSelectedPuppy}){
         }
     }
 
-    if(puppies.length <= 0){
+    if(puppies.length == 0){
         fetchPuppies();
     }
 

@@ -1,40 +1,18 @@
 import { useState } from 'react'
+import CreatePuppyButton from './CreatePuppyButton'
 
-function CreatePuppy({puppies, setPuppies}){
+function CreatePuppy({setPuppies}){
     const [puppyData, setPuppyData] = useState({
         name: '',
         breed: '',
-        status: '',
+        status: 'bench',
         imgUrl: '',
     })
     
-    const postPuppy = async() => {
-        console.log('posting');
-        try{
-            const endpoint = 'api/2308-ACC-PT-WEB-PT-B/players';
-            const url = `https://fsa-puppy-bowl.herokuapp.com/${endpoint}`;
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: puppyData.name,
-                    breed: puppyData.breed,
-                    status: puppyData.status,
-                    imageUrl: puppyData.imgUrl
-                })
-            });
-            const result = await response.json();
-            setPuppies(null);
-        }catch(err){
-            console.error(err);
-        }
-    }
-
     return (
         <>
             <form className='create-puppy'>
+                <legend>Create A Puppy</legend>
                 <label htmlFor='name'>Name</label>
                 <input onChange={(e)=>{setPuppyData(puppyData => ({
                         ...puppyData,
@@ -51,17 +29,16 @@ function CreatePuppy({puppies, setPuppies}){
                     }))}} 
                     value={puppyData.breed}
                     type={'text'} 
-                    id='Breed' 
+                    id='breed' 
                 /> 
                 <label htmlFor='status'>Status</label>
-                <input onChange={(e)=>{setPuppyData(puppyData => ({
+                <select id='status' value={puppyData.status} onChange={(e)=>{setPuppyData(puppyData => ({
                         ...puppyData,
                         ...{'status': `${e.target.value}` }
-                    }))}} 
-                    value={puppyData.status}
-                    type={'text'} 
-                    id='Status' 
-                /> 
+                    }))}}>
+                    <option value='bench'>bench</option>
+                    <option value='field'>field</option>
+                </select>
                 <label htmlFor='image-url'>Image Url</label>
                 <input onChange={(e)=>{setPuppyData(puppyData => ({
                         ...puppyData,
@@ -71,8 +48,11 @@ function CreatePuppy({puppies, setPuppies}){
                     type={'text'} 
                     id='image-url' 
                 /> 
+                {
+                    ((puppyData.name && puppyData.breed && puppyData.status) 
+                    && (<CreatePuppyButton puppyData={puppyData} setPuppies={setPuppies} setPuppyData={setPuppyData} />))
+                }
             </form>
-            <button type='button' onClick={()=>{postPuppy()}}><h2>Create Puppy</h2></button>
         </>
     )
 }

@@ -10,10 +10,12 @@ function App() {
 
     return (
         <>
-            <CreatePuppy puppies={puppies} setPuppies={setPuppies}/>
             {selectedPuppy
-                ?(<PuppyDetails selectedPuppy={selectedPuppy} setSelectedPuppy={setSelectedPuppy} />)
-                :(<Puppies puppies={puppies} setPuppies={setPuppies} setSelectedPuppy={setSelectedPuppy} />)
+                ?(<PuppyDetails selectedPuppy={selectedPuppy} setSelectedPuppy={setSelectedPuppy} setPuppies={setPuppies} />)
+                :(<>
+                    <CreatePuppy setPuppies={setPuppies}/>
+                    <Puppies puppies={puppies} setPuppies={setPuppies} setSelectedPuppy={setSelectedPuppy} />
+                  </>)
             }
         </>
     )
